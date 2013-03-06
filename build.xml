@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" ?>
+<project name ="antPro" default ="clean" basedir ="." >
+    <property  name ="outputDir"  value ="${basedir}${file.separator}output"/>
+	<property  name="sourceDir" value="${basedir}${file.separator}source" />
+	<property  name ="cssDir"  value ="${basedir}${file.separator}css"/>
+	<property  name ="jsDir"   value ="${basedir}${file.separator}js"/>
+	<property  name ="imgDir"  value ="${basedir}${file.separator}img"/>
+	
+    <target  name="clean" depends="init-ant-contrib">
+      <echo message="The base dir is: ${outputDir}"/>
+	  <delete dir="${outputDir}"/>
+    </target>
+    
+	<target name="build" depends ="clean">
+	    <mkdir dir="${outputDir}" />
+	    <copy  todir="${outputDir}">
+			<fileset dir="${basedir}">
+			   <include name="css${file.separator}**" />
+			   <include name="js${file.separator}**" />
+			   <include name="img${file.separator}**" />
+			</fileset>
+		</copy>
+		 
+		 
+		  <foreach target="compile" param="file">
+		    <path>
+				<fileset dir="${sourceDir}" >
+				   <include name="**/*.md"/>
+				</fileset>
+		    </path>
+		  </foreach>
+	</target>
+	
+	<target name="compile" >
+	   <echo message="${file}"/>
+	   <echo message="-s --template=${basedir}${file.separator}template${file.separator}template.html -f markdown -t html -o ${outputDir}${file.separator}index.html ${basedir}${file.separator}source${file.separator}index.md" />
+	   <exec executable="pandoc">
+		   <arg line="-s --template=${basedir}${file.separator}template${file.separator}template.html -f markdown -t html -o ${outputDir}${file.separator}index.html ${basedir}${file.separator}source${file.separator}index.md" />
+		 </exec>
+	</target>
+	
+	
+	<!-- install ant-contrib -->
+	<available property="ant-contrib-exists"
+             file="${ant.library.dir}/ant-contrib-1.0b3.jar" />
+  <target name="download-ant-contrib" unless="ant-contrib-exists">
+    <mkdir dir="${ant.library.dir}" />
+    <get src="http://downloads.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fant-contrib%2Ffiles%2Fant-contrib%2F1.0b3%2F&amp;use_mirror=cdnetworks-us-1"
+         dest="${ant.library.dir}/ant-contrib-1.0b3-bin.zip"
+         username="true" />
+    <unzip src="${ant.library.dir}/ant-contrib-1.0b3-bin.zip"
+           dest="${ant.library.dir}"
+           overwrite="no" />
+    <move todir="${ant.library.dir}">
+      <fileset file="${ant.library.dir}/ant-contrib/*.jar" />
+      <fileset file="${ant.library.dir}/ant-contrib/lib/*.jar" />
+    </move>
+    <delete file="${ant.library.dir}/ant-contrib-1.0b3-bin.zip" />
+    <delete dir="${ant.library.dir}/ant-contrib" />
+  </target>
+  <target name="init-ant-contrib" depends="download-ant-contrib">
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+      <classpath>
+        <pathelement location="${ant.library.dir}/ant-contrib-1.0b3.jar" />
+      </classpath>
+    </taskdef>
+  </target>
+</project>

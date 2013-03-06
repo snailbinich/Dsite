@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Service Tree Document</title>
+    <meta name="author" content="Zhaoyan">
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="./css/main.css" />
+</head>
+<body>
+  <header class="header">
+     <div class="navbar navbar-fixed-top navbar-inverse ">
+        <div class="navbar-inner ">
+          <a class="brand" href="#">ServiceTree</a>
+            <ul class="nav">
+              <li><a href=""><i class="icon-home icon-white"></i> Home</a></li>
+            </ul>
+        </div>      
+     </div>
+  </header>
+  <div class="container">
+	$body$
+  </div>
+</body>
+</html>
