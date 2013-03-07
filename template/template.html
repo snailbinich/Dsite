@@ -4,21 +4,24 @@
 	<meta charset="UTF-8">
 	<title>Service Tree Document</title>
     <meta name="author" content="Zhaoyan">
-    <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="./css/main.css" />
+    <link type="text/css" rel="stylesheet" href="$baseUrl$css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="$baseUrl$css/main.css" />
 </head>
 <body>
-  <header class="header">
+  <header class="header center">
      <div class="navbar navbar-fixed-top navbar-inverse ">
-        <div class="navbar-inner ">
-          <a class="brand" href="#">ServiceTree</a>
-            <ul class="nav">
-              <li><a href=""><i class="icon-home icon-white"></i> Home</a></li>
-            </ul>
+        <div class="navbar-inner">
+          <div class="container">
+              <a class="brand" href="#">ServiceTree</a>
+              <ul class="nav">
+                <li><a href="$baseUrl$index.html"><i class="icon-home icon-white"></i> Home</a></li>
+                <li><a href="$baseUrl$tutorial/index.html"><i class="icon-book icon-white"></i> Tutorial</a></li>                
+              </ul>
+          </div>
         </div>      
      </div>
   </header>
-  <div class="container">
+  <div class="bodyContainer container">
 	$body$
   </div>
 </body>

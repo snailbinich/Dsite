@@ -35,26 +35,33 @@ def getBaseUrlByNums(num):
 def copyDir(src, dest):
     shutil.copytree(src, dest)
 
-def complie(file):
+def complie(file, templatename):
     print "[info] compiling file :"+file
     targetFile = file.replace(sourcesDir, outputDir).replace(".md",".html")
     targetFileParentDir = os.path.dirname(targetFile)
-    print getBaseUrlByNums(calculateNums(file.replace(sourcesDir,""), "/"))
+    baseUrl = getBaseUrlByNums(calculateNums(file.replace(sourcesDir,""), os.sep))
     if not os.path.exists(os.path.dirname(targetFile)):
         os.mkdir(targetFileParentDir)
-    cmd = "pandoc -s --template="+templateDir+"/template.html "
+    cmd = "pandoc -s --template="+templateDir+os.sep + templatename
+    cmd += " -V baseUrl="+baseUrl
     cmd += " -o "+targetFile+" "+file
     print "[info] calling command : "+cmd
     os.system(cmd)
 
 def walkDir(path):
     print "[info] walking dir "+path
+    defaultTemplate = "template.html"
+    if (os.path.exists(path+os.sep+"template")):
+        f = open(path+os.sep+"template", 'r')
+        #defaultTemplate = 
+        defaultTemplate =  f.readline()
+        f.close()
     for file in os.listdir(path):
         fullPath = path+os.sep+file
         if (os.path.isdir(fullPath)):
             walkDir(fullPath)
         elif (os.path.isfile(fullPath)):
-            complie(fullPath)
+            complie(fullPath, defaultTemplate)
 
 #remove output dir
 clean()
